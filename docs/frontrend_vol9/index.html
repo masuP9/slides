@@ -1,0 +1,233 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width" />
+
+<title>継続的にアクセシビリティを高めるために ~ まずは無理なく基本を押さえる ~</title>
+
+<link rel="stylesheet" href="/reveal.js/css/reveal.css">
+<link rel="stylesheet" href="/reveal.js/css/theme/white.css">
+<link rel="stylesheet" href="/assets/css/additional.css">
+
+<!-- Theme used for syntax highlighting of code -->
+<link rel="stylesheet" href="/reveal.js/lib/css/zenburn.css">
+
+<!-- Printing and PDF exports -->
+<script>
+	var link = document.createElement( 'link' );
+	link.rel = 'stylesheet';
+	link.type = 'text/css';
+	link.href = window.location.search.match( /print-pdf/gi ) ? '/reveal.js/css/print/pdf.css' : '/reveal.js/css/print/paper.css';
+	document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+<script src="/reveal.js/lib/js/head.min.js"></script>
+<script src="/reveal.js/js/reveal.js"></script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<section>
+<h1 style="font-size: 4.5rem;">
+継続的に<span class="p-dib">アクセシビリティを</span><span class="p-dib">高めるために</span>
+<small class="p-db" style="margin: .5em 0 1em">まずは無理なく基本を押さえる</small>
+</h1>
+<p>
+<small>
+<time datetime="2017-04-28">2017年4月28日</time>
+@Frontrend Vol9
+by <a href="http://masup.net">masuP9</a>
+</small>
+</p>
+</section>
+
+<section>
+<h2>自己紹介</h2>
+<p><img src="../assets/img/profile.jpg" alt="ますぴーとかかれたバッジの写真" style="border-radius: 51%;max-height: 15vmin" /></p>
+<ul style="font-size: smaller">
+<li>桝田 草一（ますぴー）</li>
+<li><a href="https://twitter.com/masuP9">@masuP9</a></li>
+<li><a href="https://www.cyberagent.co.jp/">株式会社サイバーエージェント</a></li>
+<li>フロントエンドエンジニア <small class="p-db">アクセシビリティおじさん(兼務)</small></li>
+</ul>
+</section>
+
+<section data-background-image="../assets/img/FRESH!_visual.png">
+<h3><a href="https://freshlive.tv/"><img src="../assets/img/FRESH_logo_white_clear_1000_416.png" alt="FRESH!"></a></h3>
+<p style="color: #fff;">生放送がログイン不要・高画質で<span class="p-dib">見放題のプラットフォーム</span></p>
+</section>
+<section data-background-iframe="https://freshlive.tv/embed/86340">
+<div class="fragment fade-in" style="background-color: #fff;padding: 1em;">
+<p>[PR]FRESH!では配信主を募集しています。</p>
+<p><a href="https://freshlive.tv/lp/channelrequest">👉 チャンネル開設のご案内</a></p>
+</div>
+</section>
+
+<section>
+	<p>本題</p>
+</section>
+
+<section>
+	<p>機能開発が続くウェブサービスで、<br>
+	アクセシビリティを<strong>無理なく</strong><br>
+	保ち続けるにはどうしたら良いのでしょう。</p>
+</section>
+
+<section>
+	<p>どうしたら良いのでしょう？</p>
+</section>
+
+<section>
+	<p>知りたい</p>
+	<p><span class="p-decomoji" data-fragment-index="0"><img src="https://raw.githubusercontent.com/oti/slack-reaction-decomoji/master/decomoji/douyatteyatteruno.png" alt="どうやってやってるの"><span>1</span></span></p>
+</section>
+
+<section>
+	<h2>結論</h2>
+	<ul>
+		<li>まずはできるところから</li>
+		<li>みんなでやる</li>
+		<li></li>
+	</ul>
+</section>
+
+<section>
+	<h3>まずはできるところから</h3>
+</section>
+
+<section>
+	<h4>知覚可能</h4>
+</section>
+
+<section>
+	<h5>要は<code>alt</code>属性を入れるという話</h5>
+</section>
+
+<section>
+	<h5>マシンリーダブル</h5>
+</section>
+
+<section>
+	<h4>操作可能</h4>
+</section>
+
+<section>
+	<h5><code>hover</code>でしか操作できない<abbr title="User Interface">UI</abbr>絶対殺すマンの誕生</h5>
+</section>
+
+<section>
+	<h3>UI/コンポーネントの改善</h3>
+</section>
+
+<section>
+	<h4>ネイティブ要素をラップしてアクセシビリティを担保する</h4>
+</section>
+
+<section>
+	<h4>よく使われるコンポーネントを改善する</h4>
+</section>
+
+<section>
+	<h3>ガイドラインの作成 / 展開</h3>
+	<p>ひとりでやるには限界がある</p>
+</section>
+
+<section>
+	<h4>ひとりでやると...</h4>
+</section>
+
+<section>
+	<h4>やれるところからやろう</h4>
+	<p>自分たちのサービス特性や組織に応じたガイドラインを作ろう</p>
+</section>
+
+<section>
+	<h5>WCAG2.0(WCAG2.1)</h5>
+	<p>Web Contents Accessibility Guidelines 2.0</p>
+</section>
+
+<section>
+	<h5>ATAG2.0</h5>
+	<p>Authoring Tool Accessibility Guidelines 2.0</p>
+</section>
+
+<section>
+	<h5>他社のガイドラインを参考に...</h5>
+	<ul>
+		<li>BBC mobile</li>
+		<li>SONY</li>
+		<li>Apple...</li>
+	</ul>
+</section>
+
+<section>
+	<h4>関係者を巻き込む</h4>
+</section>
+
+<section>
+	<h5>エンジニア</h5>
+</section>
+
+<section>
+	<h5>デザイナー</h5>
+</section>
+
+<section>
+	<h5>ディレクター</h5>
+</section>
+
+<section>
+	<h5>キャラ作りも大事</h5>
+</section>
+
+<section>
+	<h2>成果</h2>
+</section>
+
+<section>
+	<h2>今後やりたいこと</h2>
+</section>
+
+<section>
+	<h3>ガイドラインの公開</h3>
+</section>
+
+<section>
+	<h3>ガイドラインのカバレッジを広く</h3>
+	<p>ビジネス職にも...ユーザーが作るコンテンツにも...</p>
+</section>
+
+<section>
+	<h3>テスト体制を強く</h3>
+</section>
+
+<section>
+	<h4>機械による自動チェック</h4>
+</section>
+
+<section>
+	<h4>QAチームとの連携</h4>
+</section>
+
+<section>
+	<p>ありがとうございました。</p>
+</section>
+
+<!-- /.slides --></div>
+<!-- /.reveal --></div>
+
+<script defer>
+	// More info https://github.com/hakimel/reveal.js#configuration
+	Reveal.initialize({
+		history: true,
+
+		// More info https://github.com/hakimel/reveal.js#dependencies
+		dependencies: [
+			{ src: '/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+		]
+	});
+	Reveal.configure({ slideNumber: 'c/t' });
+</script>
+</body>
+</html>
