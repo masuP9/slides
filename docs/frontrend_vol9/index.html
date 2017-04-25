@@ -79,8 +79,8 @@ by <a href="http://masup.net">masuP9</a>
 </section>
 
 <section>
-	<p>知りたい</p>
-	<p><span class="p-decomoji fragment" data-fragment-index="0"><img src="https://raw.githubusercontent.com/oti/slack-reaction-decomoji/master/decomoji/douyatteyatteruno.png" alt="どうやってやってるの"><span>1</span></span></p>
+	<p>FRESH!での取り組みをご紹介します。</p>
+	<p><span class="p-decomoji" data-fragment-index="0"><img src="https://raw.githubusercontent.com/oti/slack-reaction-decomoji/master/decomoji/douyatteyatteruno.png" alt="どうやってやってるの"><span>1</span></span></p>
 </section>
 
 <section>
@@ -92,129 +92,185 @@ by <a href="http://masup.net">masuP9</a>
 </section>
 
 <section>
-	<h3>まずはできるところから</h3>
-</section>
-
-<section>
 	<h4>現状を確認する</h4>
 	<p>アクセシビリティチェック</p>
 </section>
 
 <section>
-	<h5>念のためおさらい</h5>
-	<p>アクセシビリティの4つの原則</p>
+	<h5>WCAG 2.0<br>（Web Contents Accessibility Guidelines）</h5>
 	<ul>
-		<li class="fragment">知覚可能<span class="fragment"><span style="margin: 0 .5em"> = </span>そこにあると知れる</span></li>
-		<li class="fragment">操作可能<span class="fragment"><span style="margin: 0 .5em"> = </span>さわれる</span></li>
-		<li class="fragment">理解可能<span class="fragment"><span style="margin: 0 .5em"> = </span>分かる</span></li>
-		<li class="fragment"><span class="p-dib" style="width: 4em">堅牢性</span><span class="fragment"><span style="margin: 0 .5em"> = </span>壊れにくい</span></li>
+		<li class="fragment">4つの原則</li>
+		<li class="fragment">12の指針</li>
+		<li class="fragment">59の達成基準</li>
+		<li class="fragment">3つのレベル</li>
 	</ul>
-	<p class="fragment"><small>詳しくは <a href="https://www.w3.org/TR/WCAG20/">WCAG2.0</a>（<a href="http://waic.jp/docs/WCAG20/Overview.html">日本語訳</a>）を</small></p>
+	<footer>
+	<p class="fragment">詳しくは <a href="https://www.w3.org/TR/WCAG20/">WCAG2.0</a>（<a href="http://waic.jp/docs/WCAG20/Overview.html">日本語訳</a>）を</p>
+	</footer>
 </section>
 
 <section>
-	<p>サービスの特性にもよりますが<br>まずは上からチェックしていきます</p>
+	<p>どこからやれば…</p>
 </section>
 
 <section>
+<h5>4つの原則</h5>
+<p>おさらいしておきましょう</p>
+<ul>
+<li class="fragment">知覚可能<span class="fragment"><span style="margin: 0 .5em"> = </span>そこにあると知れる</span></li>
+<li class="fragment">操作可能<span class="fragment"><span style="margin: 0 .5em"> = </span>さわれる</span></li>
+<li class="fragment">理解可能<span class="fragment"><span style="margin: 0 .5em"> = </span>分かる</span></li>
+<li class="fragment"><span class="p-dib" style="width: 4em">堅牢性</span><span class="fragment"><span style="margin: 0 .5em"> = </span>壊れにくい</span></li>
+</ul>
+</section>
+
+<section>
+	<p>最初にやったのは</p>
+	<ul>
+		<li class="fragment"><code>alt</code>入ってるかなー</li>
+		<li class="fragment">キーボードで操作できるかなー</li>
+	</ul>
+	<p class="fragment">👉 知覚可能と操作可能の基本</p>
+</section>
+
+<section>
+<p>実はこれがすべてできている<br />ウェブサイトやサービスはかなり少ない。</p>
+</section>
+
+<section>
+	<h5>チェック結果1 - <code>alt</code></h5>
+</section>
+
+<section>
+<p>主要な画像には<code>alt</code>が入っていたが...</p>
+<pre class="fragment"><code class="html">&lt;div style="background-image: url(hoge.jpg);"&gt;&lt;/div&gt;</code></pre>
+<p class="fragment"><span class="p-decomoji" data-fragment-index="0"><img src="https://raw.githubusercontent.com/oti/slack-reaction-decomoji/master/decomoji/oyaoya.png" alt="おやおや"><span>1</span></span></p>
+</section>
+
+<section>
+<p><code>object-fit</code>さえ使えれば...案件だった</p>
+<p class="fragment">👉 使おう</p>
+</section>
+
+<section>
+<pre><code class="css">.Image.-cover > img {
+  object-fit: cover;
+}</code></pre>
+<pre><code class="html">&lt;div class="Image -cover"&gt;
+&lt;img src="hoge.jpg" alt="huga" /&gt;
+&lt;/div&gt;</code></pre>
+<p class="fragment">アクセシビリティーーーーーーーーー</p>
+</section>
+
+<section>
+	<h5>結果2 - キーボード操作</h5>
+</section>
+
+<section>
+<div>
+<pre><code class="jsx">&lt;div onClick={this.onClick}&gt;Button&lt;/div&gt;</code></pre>
+<p><small>キーボードフォーカスが受け取れない</small></p>
+</div>
+<div class="fragment">
+<pre><code class="css">.Menu:hover ul {
+display: block;
+}</code></pre>
+<p><small>タッチパネルでどうやって<code>hover</code>するん？</small></p>
+</div>
+<p class="fragment"><span class="p-decomoji" data-fragment-index="0"><img src="https://raw.githubusercontent.com/oti/slack-reaction-decomoji/master/decomoji/oyaoya.png" alt="おやおや"><span>2</span></span></p>
+</section>
+
+<section>
+<p>こんな時はやっぱり <code>button</code></p>
+<div class="fragment">
+<pre><code class="jsx">&lt;button type="button" onClick={this.onClick}&gt;Button&lt;/button&gt;</code></pre>
+</div>
+<div class="fragment">
+<pre><code class="jsx">&lt;button
+  className="Menu__button" type="button"
+  aria-expanded={this.state.dropdownOpen}
+  onMouseOver={this.onMouseOver} // hover
+  onMouseOut={this.onMouseOut}   // blur
+  onClick={this.onClick}         // click でも操作可能に
+&gt;&lt;/button&gt;
+</code></pre>
+</div>
+<div class="fragment">
+<p><small><code>a</code>でもいいです。ただし<code>href</code>あり</small></p>
+</div>
+</section>
+
+<!-- <section>
 	<h4>知覚可能</h4>
 	<p>そこにあると知れる</p>
-</section>
+</section> -->
 
-<section data-background-color="#000">
+<!-- <section data-background-color="#000">
 <a href="https://freshlive.tv">
 <img src="../assets/img/FRESH_logo_white_clear_1000_416.png" alt="" />
 </a>
-</section>
+</section> -->
 
-<section>
+<!-- <section>
 <pre><code class="html">&lt;div style="background: #000"&gt;
   &lt;a href="https://freshlive.tv"&gt;
     &lt;img src="FRESH_logo.png" alt="" /&gt;
   &lt;/a&gt;
 &lt;/div&gt;
 </code></pre>
-</section>
+</section> -->
 
-<section>
+<!-- <section>
 <p>視覚以外では知覚できない。例えば</p>
 <ul>
-	<li>サーチボット</li>
+	<li>サーチボットなどのロボット</li>
 	<li>スクリーンリーダー</li>
 	<li>画像読み込み失敗時</li>
 </ul>
 <p>etc...</p>
-</section>
+</section> -->
 
-<section data-background-color="#fdfdfd">
+<!-- <section data-background-color="#fdfdfd">
 	<a href="https://freshlive.tv">
 	<img src="../assets/img/FRESH_logo_white_clear_1000_416.png" alt="FRESH!" />
 	</a>
-</section>
+</section> -->
 
-<section>
+<!-- <section>
 <pre><code class="html">&lt;div style="background: #fdfdfd"&gt;
   &lt;img src="FRESH_logo.png" alt="FRESH!" /&gt;
 &lt;/div&gt;
 </code></pre>
-</section>
+</section> -->
 
-<section>
+<!-- <section>
 	<p>視覚で知覚できない。例えば</p>
 	<ul>
 		<li>視覚で主に情報を得ている人</li>
 		<li>眩しい環境</li>
 		<li>弱視 / 色覚異常</li>
 	</ul>
-</section>
+</section> -->
 
-<section>
+<!-- <section>
 	<p>マシンリーダブル<br />&amp;<br />ヒューマンリーダブル</p>
+</section> -->
+
+
+<section>
+	<p>アクセシビリティーーーーーーー</p>
 </section>
 
 <section>
-	<h5>チェックポイント（簡易）</h5>
-	<ul>
-		<li>画像に<code>alt</code>属性が入ってますか</li>
-		<li>テキストは読みやすいコントラスト比ですか</li>
-	</ul>
+	<p>だがしかし</p>
 </section>
 
 <section>
-	<p>チェックしてみよう</p>
-	<p>👉 <a href="https://www.cyberagent.co.jp/">株式会社サイバーエージェント</a></p>
-	<p><span class="p-decomoji fragment" data-fragment-index="0"><img src="https://raw.githubusercontent.com/oti/slack-reaction-decomoji/master/decomoji/oyaoya.png" alt="おやおや"><span>1</span></span></p>
+<p>日々続く機能開発<br />作られる新しいコンポーネント...</p>
 </section>
 
 <section>
-	<h4>操作可能</h4>
-	<p>さわれる</p>
-</section>
-
-<section>
-	<ul>
-		<li>マウスでクリックできる</li>
-		<li>タッチデバイスでタップできる</li>
-		<li>キーボードでッターン！</li>
-	</ul>
-</section>
-
-<section>
-	<p>チェックしてみよう</p>
-	<p>👉 <a href="https://www.cyberagent.co.jp/">株式会社サイバーエージェント</a></p>
-	<p><span class="p-decomoji" data-fragment-index="0"><img src="../assets/img/emoji/zawazawa.png" alt="ざわ...ざわ..."><span>1</span></span></p>
-</section>
-
-<section>
-<p>実はこれがすべてできているウェブサイトやサービスはかなり少ない。</p>
-</section>
-
-<section>
-	<h4>まずはできるところから、まとめ</h4>
-	<ul>
-		<li><code>alt</code>が入ってるか、入る構造になっているかを確認しよう</li>
-		<li>キーボードで使えるかどうか、<kbd>Tab</kbd>キーをカチャカチャ、ッターン！</li>
-	</ul>
+	<p>汎用的なコンポーネントをアクセシブルにしよう</p>
 </section>
 
 <section>
@@ -226,7 +282,24 @@ by <a href="http://masup.net">masuP9</a>
 </section>
 
 <section>
-	<h4>よく使われるコンポーネントを改善する</h4>
+	<h4><code>Icon</code>コンポーネント</h4>
+</section>
+
+<section>
+	<p>だがしかし…</p>
+</section>
+
+<section>
+	<p>そもそもデザインが...</p>
+	<p class="fragment">そもそも仕様が...(ry</p>
+</section>
+
+<section>
+	<p>ひとりではできない</p>
+</section>
+
+<section>
+	<p>あなたはひとりではない</p>
 </section>
 
 <section>

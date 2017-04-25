@@ -105,3 +105,8 @@
 .reveal figcaption {
   font-size: smaller;
 }
+
+.reveal pre code {
+  padding: 1em;
+  border: 0;
+}
