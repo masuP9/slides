@@ -43,13 +43,13 @@ by <a href="http://masup.net">masuP9</a>
 </section>
 
 <section>
-<h2>自己紹介</h2>
+<h2><a href="https://twitter.com/masuP9">@masuP9</a></h2>
 <p><img src="../assets/img/profile.jpg" alt="ますぴーとかかれたバッジの写真" style="border-radius: 51%;max-height: 15vmin" /></p>
 <ul style="font-size: smaller">
 <li>桝田 草一（ますぴー）</li>
-<li><a href="https://twitter.com/masuP9">@masuP9</a></li>
 <li><a href="https://www.cyberagent.co.jp/">株式会社サイバーエージェント</a></li>
-<li>フロントエンドエンジニア <small class="p-db">アクセシビリティおじさん(兼務)</small></li>
+<li>フロントエンドデベロッパー</li>
+<li>CAのアクセシビリティおじさん(自称)</li>
 </ul>
 </section>
 
@@ -69,9 +69,9 @@ by <a href="http://masup.net">masuP9</a>
 </section>
 
 <section>
-	<p>機能開発が続くウェブサービスで、<br>
-	アクセシビリティを<strong>無理なく</strong><br>
-	保ち続けるにはどうしたら良いのでしょう。</p>
+	<p>運用が続くウェブサービス/サイトで、<br>
+	アクセシビリティを<strong>無理なく高める</strong><br>
+	にはどうしたら良いのでしょう。</p>
 </section>
 
 <section>
@@ -80,15 +80,14 @@ by <a href="http://masup.net">masuP9</a>
 
 <section>
 	<p>知りたい</p>
-	<p><span class="p-decomoji" data-fragment-index="0"><img src="https://raw.githubusercontent.com/oti/slack-reaction-decomoji/master/decomoji/douyatteyatteruno.png" alt="どうやってやってるの"><span>1</span></span></p>
+	<p><span class="p-decomoji fragment" data-fragment-index="0"><img src="https://raw.githubusercontent.com/oti/slack-reaction-decomoji/master/decomoji/douyatteyatteruno.png" alt="どうやってやってるの"><span>1</span></span></p>
 </section>
 
 <section>
-	<h2>結論</h2>
 	<ul>
 		<li>まずはできるところから</li>
-		<li>みんなでやる</li>
-		<li></li>
+		<li class="fragment">みんなでやる</li>
+		<li class="fragment">自動化する</li>
 	</ul>
 </section>
 
@@ -97,15 +96,80 @@ by <a href="http://masup.net">masuP9</a>
 </section>
 
 <section>
+	<h4>現状を確認する</h4>
+	<p>アクセシビリティチェック</p>
+</section>
+
+<section>
+	<h5>念のためおさらい</h5>
+	<p>アクセシビリティの4つの原則</p>
+	<ul>
+		<li class="fragment">知覚可能<span class="fragment"><span style="margin: 0 .5em"> = </span>そこにあると知れる</span></li>
+		<li class="fragment">操作可能<span class="fragment"><span style="margin: 0 .5em"> = </span>さわれる</span></li>
+		<li class="fragment">理解可能<span class="fragment"><span style="margin: 0 .5em"> = </span>分かる</span></li>
+		<li class="fragment"><span class="p-dib" style="width: 4em">堅牢性</span><span class="fragment"><span style="margin: 0 .5em"> = </span>壊れにくい</span></li>
+	</ul>
+	<p class="fragment"><small>詳しくは <a href="https://www.w3.org/TR/WCAG20/">WCAG2.0</a>（<a href="http://waic.jp/docs/WCAG20/Overview.html">日本語訳</a>）を</small></p>
+</section>
+
+<section>
+	<p>サービスの特性にもよりますが<br>まずは上からチェックしていきます</p>
+</section>
+
+<section>
 	<h4>知覚可能</h4>
+	<p>そこにあると知れる</p>
+</section>
+
+<section data-background-color="#000">
+<a href="https://freshlive.tv">
+<img src="../assets/img/FRESH_logo_white_clear_1000_416.png" alt="" />
+</a>
 </section>
 
 <section>
-	<h5>要は<code>alt</code>属性を入れるという話</h5>
+<pre><code class="html">&lt;div style="background: #000"&gt;
+  &lt;a href="https://freshlive.tv"&gt;
+    &lt;img src="FRESH_logo.png" alt="" /&gt;
+  &lt;/a&gt;
+&lt;/div&gt;
+</code></pre>
 </section>
 
 <section>
-	<h5>マシンリーダブル</h5>
+<p>視覚以外では知覚できない。例えば</p>
+<ul>
+	<li>サーチボット</li>
+	<li>スクリーンリーダー</li>
+	<li>画像読み込み失敗時</li>
+</ul>
+<p>etc...</p>
+</section>
+
+<section data-background-color="#fdfdfd">
+	<a href="https://freshlive.tv">
+	<img src="../assets/img/FRESH_logo_white_clear_1000_416.png" alt="FRESH!" />
+	</a>
+</section>
+
+<section>
+<pre><code class="html">&lt;div style="background: #fdfdfd"&gt;
+  &lt;img src="FRESH_logo.png" alt="FRESH!" /&gt;
+&lt;/div&gt;
+</code></pre>
+</section>
+
+<section>
+	<p>視覚で知覚できない。例えば</p>
+	<ul>
+		<li>視覚で主に情報を得ている人</li>
+		<li>眩しい環境</li>
+		<li>弱視 / 色覚異常</li>
+	</ul>
+</section>
+
+<section>
+	<p>マシンリーダブル</p>
 </section>
 
 <section>
