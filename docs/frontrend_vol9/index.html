@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width" />
 
-<title>継続的にアクセシビリティを高めるために ~ まずは無理なく基本を押さえる ~</title>
+<title>継続的にアクセシビリティを高めるために ~ まずは無理なく基本を押さえる ~ - masuP.net</title>
 
-<link rel="stylesheet" href="/reveal.js/css/reveal.css">
-<link rel="stylesheet" href="/reveal.js/css/theme/white.css">
-<link rel="stylesheet" href="/assets/css/additional.css">
+<link rel="stylesheet" href="../reveal.js/css/reveal.css">
+<link rel="stylesheet" href="../reveal.js/css/theme/white.css">
+<link rel="stylesheet" href="../assets/css/additional.css">
 
 <!-- Theme used for syntax highlighting of code -->
-<link rel="stylesheet" href="/reveal.js/lib/css/zenburn.css">
+<link rel="stylesheet" href="../reveal.js/lib/css/zenburn.css">
 
 <!-- Printing and PDF exports -->
 <script>
@@ -21,10 +21,23 @@
 	link.href = window.location.search.match( /print-pdf/gi ) ? '/reveal.js/css/print/pdf.css' : '/reveal.js/css/print/paper.css';
 	document.getElementsByTagName( 'head' )[0].appendChild( link );
 </script>
-<script src="/reveal.js/lib/js/head.min.js"></script>
-<script src="/reveal.js/js/reveal.js"></script>
+<script src="../reveal.js/lib/js/head.min.js"></script>
+<script src="../reveal.js/js/reveal.js"></script>
+
+<meta name="author" content="Soichi Masuda">
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="継続的にアクセシビリティを高めるために ~ まずは無理なく基本を押さえる ~ - masuP.net" />
+<meta property="og:url" content="http://masup.net/slide/frontrend_vol9/index.html#/" />
+<meta property="og:locale" content="ja_jp" />
+<meta property="og:image" content="http://masup.net/slide/frontrend_vol9/slide_ogp.png" />
+<meta property="fb:admins" content="100001237091421" />
+<meta property="fb:app_id" content="1556292864648648" />
+<meta property="og:description" content="2017年4月28日のFrontrend Vol.9での発表資料です。継続的にアクセシビリティを高めるための所属サービスでの取り組みを紹介しました。" />
+
 </head>
 <body>
+<script src="/js/gtm.js"></script>
 <div class="reveal">
 <div class="slides">
 
@@ -57,7 +70,7 @@ by <a href="http://masup.net">masuP9</a>
 <h3><a href="https://freshlive.tv/"><img src="../assets/img/FRESH_logo_white_clear_1000_416.png" alt="FRESH!"></a></h3>
 <p style="color: #fff;">生放送がログイン不要・高画質で<span class="p-dib">見放題のプラットフォーム</span></p>
 </section>
-<section data-background-iframe="https://freshlive.tv/embed/86340">
+<section data-background-iframe="https://freshlive.tv/embed/109133">
 <div class="fragment fade-in" style="background-color: #fff;padding: 1em;">
 <p>[PR]FRESH!では配信主を募集しています。</p>
 <p><a href="https://freshlive.tv/lp/channelrequest">👉 チャンネル開設のご案内</a></p>
@@ -89,6 +102,10 @@ by <a href="http://masup.net">masuP9</a>
 		<li class="fragment">まずはできるところから</li>
 		<li class="fragment">みんなでやる</li>
 	</ul>
+</section>
+
+<section>
+	<h3>まずはできるところから</h3>
 </section>
 
 <section>
@@ -135,7 +152,8 @@ by <a href="http://masup.net">masuP9</a>
 </section>
 
 <section>
-<p>実はこれがすべてできている<br />ウェブサイトやサービスはかなり少ない。</p>
+<p>基本かつ、抑えられるとかなり<br />底上げできる項目だが...</p>
+<p class="fragment">実はこれがすべてできている<br />ウェブサイトやサービスはかなり少ない。</p>
 </section>
 
 <section>
@@ -144,8 +162,14 @@ by <a href="http://masup.net">masuP9</a>
 </section>
 
 <section>
-<p>主要な画像には<code>alt</code>が入っていたが...</p>
-<pre class="fragment"><code class="html">&lt;div style="background-image: url(hoge.jpg);"&gt;&lt;/div&gt;</code></pre>
+<pre><code class="html">&lt;div
+  class="Image -cover"
+  style="background-image: url(hoge.jpg)"
+&gt;
+&lt;/div&gt;</code></pre>
+<pre><code class="css">.Image.-cover > img {
+  background-size: cover;
+}</code></pre>
 <p class="fragment"><span class="p-decomoji" data-fragment-index="0"><img src="https://raw.githubusercontent.com/oti/slack-reaction-decomoji/master/decomoji/oyaoya.png" alt="おやおや"><span>1</span></span></p>
 </section>
 
@@ -165,8 +189,39 @@ by <a href="http://masup.net">masuP9</a>
 </section>
 
 <section>
+<p>ただ<code>object-fit</code>未対応ブラウザは...</p>
+<pre><code class="html">&lt;div
+  class="Image -cover"
+  style="background-image: url(hoge.jpg)"
+  role="img"
+  aria-label="hoge"
+&gt;
+&lt;/div&gt;</code></pre>
+<p>WAI-ARIAのお世話に...</p>
+</section>
+
+<section>
+	<p>で、できるところからだから...</p>
+</section>
+
+<section>
 	<h5>結果2 - キーボード操作</h5>
 	<p><code>&lt;Menu&gt;</code>コンポーネント編</p>
+</section>
+
+<section>
+	<div class="Menu">
+  <span class="Menu__button p-db">Menu</span>
+  <ul>
+  	<li><a href="#">hoge</a></li>
+  	<li><a href="#">huga</a></li>
+  </ul>
+	</div>
+	<style>
+		.Menu:not(:hover) ul {
+		  display: none;
+		}
+	</style>
 </section>
 
 <section>
@@ -175,8 +230,8 @@ by <a href="http://masup.net">masuP9</a>
   &lt;span&gt;Menu&lt;/span&gt;
   &lt;ul&gt;~~~&lt;/ul&gt;
 &lt;/div&gt;</code></pre>
-<pre><code class="css">.Menu:hover ul {
-  display: block;
+<pre><code class="css">.Menu:not(:hover) ul {
+  display: none;
 }</code></pre>
 <p>キーボードやタッチインターフェースで<br>どうやって<code>hover</code>するん？</p>
 </div>
@@ -188,7 +243,7 @@ by <a href="http://masup.net">masuP9</a>
 <div class="fragment">
 <pre><code class="jsx">&lt;button type="button" onClick={this.onClick}&gt;Button&lt;/button&gt;</code></pre>
 </div>
-<p class="fragment">クリックならキーボードやタップで操作可能に</p>
+<p class="fragment"><code>button</code>を<code>click</code>なら<br />キーボードやタップで操作可能に</p>
 </section>
 
 <section>
@@ -248,14 +303,14 @@ by <a href="http://masup.net">masuP9</a>
 
 <section>
 	<h5>概要</h5>
-	<div style="text-align: left">
-	<p>視聴ユーザー向け画面、及び配信管理画面双方を対象としたアクセシビリティガイドライン。</p>
-	<p>コンテンツ制作者、及びUI開発者はガイドラインに沿った制作をすることを<strong>強く推奨する。</strong></p>
+	<div class="p-text-left-block">
+	<p>FRESH!が提供するサービスを対象としたアクセシビリティガイドライン。</p>
+	<p>コンテンツ制作者、及びUI開発者はガイドラインに沿った制作をすることを<strong>強く推奨する</strong></p>
 	</div>
 </section>
 
 <section>
-	<h5>ガイドラインの項目</h5>
+	<h5>ガイドラインを少し紹介</h5>
 	<ul>
 		<li>指針</li>
 		<li>実装方法と解説（についてのリンク）</li>
@@ -265,12 +320,14 @@ by <a href="http://masup.net">masuP9</a>
 
 <section>
 	<h5>1.1.1 非テキストコンテンツの代替テキスト</h5>
-	<p style="text-align: left">非テキストコンテンツ（画像や動画）には代替テキストを提供する</p>
+	<div class="p-text-left-block">
+	<p>非テキストコンテンツ（画像や動画）には<br />代替テキストを提供する</p>
+	</div>
 </section>
 
 <section>
 	<h6>実装方法 / 解説</h6>
-	<ol>
+	<ol class="p-text-left-block">
 		<li><a href="http://waic.jp/docs/UNDERSTANDING-WCAG20/text-equiv-all.html">非テキストコンテンツ:達成基準 1.1.1 を理解する | WCAG2.0解説書</a></li>
 		<li><a href="http://waic.jp/docs/UNDERSTANDING-WCAG20/media-equiv-captions.html">キャプション (収録済):達成基準 1.2.2 を理解する | WCAG 2.0解説書</a></li>
 	</ol>
@@ -278,14 +335,14 @@ by <a href="http://masup.net">masuP9</a>
 
 <section>
 	<h6>テスト方法</h6>
-	<ol>
-		<li>ESlintプラグインによる自動チェック
+	<ol class="p-text-left-block">
+		<li class="fragment">ESlintプラグインによる自動チェック
 			<ol>
 				<li><a href="https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/accessible-emoji.md">eslint-plugin-jsx-a11y/accessible-emoji</a></li>
 				<li><a href="eslint-plugin-jsx-a11y/img-has-alt">eslint-plugin-jsx-a11y/img-has-alt</a></li>
 				<li><a href="eslint-plugin-jsx-a11y/iframe-has-title">eslint-plugin-jsx-a11y/iframe-has-title</a></li>
 			</ol>
-		<li>コードレビューによるチェック</li>
+		<li class="fragment">コードレビューによるチェック</li>
 		</li>
 	</ol>
 </section>
@@ -295,17 +352,17 @@ by <a href="http://masup.net">masuP9</a>
 </section>
 
 <section>
-	<ul>
+	<ul style="line-height: 2">
 		<li>
 		実際に使われるガイドラインにしたい
 		<ul>
-			<li>無理な項目をいれない</li>
-			<li>非技術者でも理解できる文言にしたい</li>	
+			<li class="fragment">非技術者でも理解できる文言にしたい</li>
+			<li class="fragment">無理な項目をいれない</li>
 		</ul>
 		</li>
-		<li>
+		<li class="fragment">
 		サービス特性に合わせたガイドラインにしたい
-		<ul>
+		<ul class="fragment">
 			<li>配信管理画面はオーサリングツール<br>👉 ATAG 2.0 をベースとしたい</li>
 		</ul>
 		</li>
@@ -336,24 +393,19 @@ by <a href="http://masup.net">masuP9</a>
 
 <section>
 	<p>ATAGの対象</p>
-	<blockquote style="font-size: 3vh">
+	<div style="font-size: 2.5vh">
 		<ul>
-			<li>web page authoring tools (e.g. WYSIWYG HTML editors)</li>
-			<li>software for directly editing source code</li>
-			<li>software for converting to web content technologies (e.g. "Save as HTML" features in office document applications)</li>
-			<li>integrated development environments (e.g. for web application development)</li>
-			<li>software that generates web content on the basis of templates, scripts, command-line input or "wizard"-type processes</li>
-			<li>software for rapidly updating portions of web pages (e.g. blogging, wikis, online forums)</li>
-			<li>software for generating/managing entire websites (e.g. content management systems, courseware tools, content aggregators)</li>
-			<li>email clients that send messages using web content technologies</li>
-			<li>multimedia authoring tools</li>
-			<li>software for creating mobile web applications</li>
+			<li>DreamWeaver, ホームページビルダーなどのエディタ</li>
+			<li>ブログシステム、Wiki</li>
+			<li>CMS</li>
+			<li>WYSIWYG HTMLエディタ</li>
 		</ul>
-	</blockquote>
+		<p>などなど</p>
+	</div>
 </section>
 
 <section>
-	<p>二つのパート</p>
+	<p>ATAGの二つの観点</p>
 	<ol style="list-style-type: upper-latin;font-size: smaller;">
 		<li>オーサリングツールがアクセシブルかどうか</li>
 		<li>アクセシブルなコンテンツを生成できるか</li>
@@ -365,11 +417,11 @@ by <a href="http://masup.net">masuP9</a>
 	<blockquote style="font-size: smaller">
 	<p>オーサリングツールがテキスト以外のコンテンツを追加する機能を提供する場合、著者はテキスト以外のコンテンツに対してプログラムによって関連付けられた代替テキストを変更できます。</p>
 	</blockquote>
-	<p>👉 画像アップできるなら<br><code>alt</code>入れられるようにしとけよ！（意訳）</p>
+	<p class="fragment">👉 画像アップできるなら<br><code>alt</code>入れられるようにしとけよ！（意訳）</p>
 </section>
 
 <section>
-	<p>ガイドライン作ったら...</p>
+	<p>ドキュメントは書くだけじゃだめ</p>
 </section>
 
 <section>
@@ -387,14 +439,14 @@ by <a href="http://masup.net">masuP9</a>
 
 <section>
 <h6>1.3.1 色の使用</h6>
-<div style="text-align: left;font-size: smaller">
+<div class="p-text-left-block">
 <p>色が、情報を伝える、動作を示す、反応を促す、又は視覚的な要素を判別するための唯一の視覚的手段としない</p>
 </div>
 </section>
 
 <section>
 <h6>1.3.3 コントラスト</h6>
-<div style="text-align: left;font-size: smaller">
+<div class="p-text-left-block">
 <p>コンテンツやUI上のテキストやアイコンの視覚的提示に、4.5:1 以上のコントラスト比を設ける。ただし、次の場合は除くが、可能な限りコントラスト比を確保する。</p>
 <ul>
 <li>大きな文字サイズのテキスト</li>
@@ -406,7 +458,7 @@ by <a href="http://masup.net">masuP9</a>
 
 <section>
 <h6>2.1.4 ターゲットサイズ</h6>
-<div style="text-align: left;font-size: smaller">
+<div class="p-text-left-block">
 <p>ポインティングのターゲットサイズは、タッチインターフェース向けUIでは 44×44 px 以上を確保する。</p>
 </div>
 </section>
@@ -417,7 +469,7 @@ by <a href="http://masup.net">masuP9</a>
 
 <section>
 <h6>2.1.2 複雑な操作に依存しない</h6>
-<div style="text-align: left;font-size: smaller">
+<div class="p-text-left-block">
 <p>コンテンツやUIの全ての機能には、特定のキーストロークのタイミングや複雑なジェスチャを必要としないようにし、必要な場合は単純な操作による代替操作を用意する。</p>
 </div>
 <p class="fragment"><small>コナミコマンドの禁止 🚫</small></p>
@@ -425,7 +477,7 @@ by <a href="http://masup.net">masuP9</a>
 
 <section>
 <h6>2.2.2 一時停止、停止、非表示</h6>
-<div style="text-align: left;font-size: smaller">
+<div class="p-text-left-block">
 <p>動きのある、点滅している、スクロールする、又は自動更新する情報は、それらがコンテンツとして必須出ない場合、利用者がそれらを一時停止、停止、非表示にすることができるメカニズムを提供する</p>
 </div>
 </section>
@@ -436,18 +488,23 @@ by <a href="http://masup.net">masuP9</a>
 
 <section>
 <p>アクセシビリティったらアクセシビリティ！</p>
-<p class="fragment" style="font-size: 13vmin">🙅</p>
+<p class="fragment" style="font-size: 13vmin"><span aria-label="ダメ！">🙅</span></p>
 </section>
 
 <section>
 	<p>世の中には目の見えない人もいてね…</p>
-	<p class="fragment" style="font-size: 13vmin">🤔</p>
+	<p class="fragment" style="font-size: 13vmin"><span aria-label="んー...">🤔</span></p>
+	<p class="fragment">そうだけどそうじゃない</p>
 </section>
 
 <section>
+<p>だれにとっても</p>
 <blockquote>
-<script async class="speakerdeck-embed" data-slide="35" data-id="92b606797eda45ce961818382324fc7a" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
-<footer style="font-size: smaller"><cite><a href="https://speakerdeck.com/ahomu/pahuomansuhanazezhong-yao-nafalseka-mu-xian-false-ux-nitorawarenaikuraiantosaidokai-fa-falseben-zhi">パフォーマンスはなぜ重要なのか？ - 目先の UX(?) にとらわれないクライアントサイド開発の本質</a></cite></footer>
+<div style="height: 440px;margin-bottom: .25em">
+<script async class="speakerdeck-embed" data-slide="28" data-id="92b606797eda45ce961818382324fc7a" data-ratio="1.77777777777778" src="//speakerdeck.com/assets/embed.js"></script>
+</div>
+<footer style="font-size: 2vmin"><cite><a href="https://speakerdeck.com/ahomu/pahuomansuhanazezhong-yao-nafalseka-mu-xian-false-ux-nitorawarenaikuraiantosaidokai-fa-falseben-zhi">
+パフォーマンスはなぜ重要なのか？ - 目先の UX(?) にとらわれないクライアントサイド開発の本質</a></cite> by Ayumu Sato</footer>
 </blockquote>
 </section>
 
@@ -464,11 +521,28 @@ by <a href="http://masup.net">masuP9</a>
 </section>
 
 <section>
-	<h5>巻き込んだ結果</h5>
+<p>「自分の会社やチームに<br />アクセシビリティおじさん<br />とか言う人が居たな...」</p>
+</section>
+
+<section>
+	<p>最初は「うるさいやつだな...」<br>と思われるかもしれませんが</p>
+</section>
+
+<section>
+	<p>巻き込んだ結果、少しずつ</p>
 	<ul>
-		<li>新機能のデザインの際にアクセシビリティについて相談が来た</li>
-		<li>仕様の相談の際に考慮されるものの一つに</li>
+		<li class="fragment">新デザインの際にアクセシビリティについて相談が来るように</li>
+		<li class="fragment">仕様の相談の際に考慮されるものの一つに</li>
 	</ul>
+</section>
+
+<section>
+	<p>やさしく粘り強く、負けない気持ちで<br />アクセシビリティおじさんしていきましょう</p>
+</section>
+
+<section>
+	<p>ガイドラインは鋭意作成中 💪</p>
+	<p>完成したら公開予定</p>
 </section>
 
 <section>
@@ -483,16 +557,20 @@ by <a href="http://masup.net">masuP9</a>
 
 <section>
 	<h3>ガイドラインのカバレッジを広く</h3>
-	<p>ビジネス職にも...ユーザーが作るコンテンツにも...</p>
+	<p class="fragment">ビジネス職にも...<br />ユーザーが作るコンテンツにも...</p>
+	<p class="fragment"><small>生放送動画のリアルタイム字幕生成ェ...</small></p>
 </section>
 
 <section>
-	<h3>テスト体制の構築</h3>
+	<h3>テストの強化</h3>
+	<h4>QAチームとの連携</h4>
+	<div class="p-text-left-block">
 	<ul>
 		<li>ガイドラインの項目をQA時にテストする</li>
 		<li>通常テストの改善</li>
 	</ul>
-	<p>例えばテスト手順中の操作で「クリック」があれば、キーボード操作もテスト</p>
+	<p class="fragment">例えばテスト手順中の操作で「クリック」があれば、キーボード操作もテスト</p>
+	</div>
 </section>
 
 <section>
@@ -505,15 +583,37 @@ by <a href="http://masup.net">masuP9</a>
 
 <section>
 	<h2>まとめ</h2>
+	<div class="p-text-left-block">
 	<ul>
 		<li class="fragment">まずはできるところから 👉 簡易チェックから</li>
 		<li class="fragment">みんなでやる 👉 指針を作って巻き込む</li>
-		<li class="fragment">もっと広げていきます 💪</li>
+		<li class="fragment">もっと広げていくぞ</li>
 	</ul>
+	</div>
+</section>
+
+<section>
+	<p>できるところからやっていきましょう 💪</p>
 </section>
 
 <section>
 	<p>ありがとうございました</p>
+</section>
+
+<section>
+	<h2 style="font-size: smaller;">謝辞 &amp; リンク（出現順）</h2>
+	<ul style="font-size: 2.5vh">
+		<li><a href="https://freshlive.tv/">FRESH!</a></li>
+		<li><a href="https://github.com/oti/slack-reaction-decomoji">slack-reaction-decomoji</a></li>
+		<li><a href="https://www.w3.org/TR/WCAG20/">WCAG 2.0</a></li>
+		<li><a href="http://waic.jp/docs/WCAG20/Overview.html">WCAG 2.0 日本語訳</a></li>
+		<li><a href="http://waic.jp/docs/UNDERSTANDING-WCAG20/Overview.html">WCAG 2.0 解説書</a></li>
+		<li><a href="https://github.com/evcohen/eslint-plugin-jsx-a11y">evcohen/eslint-plugin-jsx-a11y</a></li>
+		<li><a href="https://www.w3.org/TR/UAAG20/">UAAG 2.0</a></li>
+		<li><a href="https://www.w3.org/TR/ATAG20/">ATAG 2.0</a></li>
+		<li><a href="https://speakerdeck.com/ahomu/pahuomansuhanazezhong-yao-nafalseka-mu-xian-false-ux-nitorawarenaikuraiantosaidokai-fa-falseben-zhi">パフォーマンスはなぜ重要なのか？ - 目先の UX(?) にとらわれないクライアントサイド開発の本質</a></li>
+	</ul>
+	<p style="font-size: smaller"><a href="./">最初に戻る🏠</a></p>
 </section>
 
 <!-- <section>

@@ -46,6 +46,13 @@
   line-height: 1;
 }
 
+.reveal section .p-text-left-block {
+  max-width: 20em;
+  margin: 1em auto;
+  font-size: smaller;
+  text-align: left;
+}
+
 .reveal .p-decomoji span {
   font-size: 1.4em;
   font-family: helvetica,arial;
