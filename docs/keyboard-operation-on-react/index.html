@@ -1,0 +1,371 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width" />
+
+<title>キーボード操作(ｶﾁｬｶﾁｬｶﾁｬ…ｯﾀｰﾝ!)するために</title>
+
+<link rel="stylesheet" href="../reveal.js/css/reveal.css">
+<link rel="stylesheet" href="../reveal.js/css/theme/white.css">
+<link rel="stylesheet" href="../assets/css/additional.css">
+
+<!-- Theme used for syntax highlighting of code -->
+<link rel="stylesheet" href="../reveal.js/lib/css/zenburn.css">
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Reactでキーボード操作(ｶﾁｬｶﾁｬｶﾁｬ…ｯﾀｰﾝ!)するために - masuP.net" />
+<meta property="og:url" content="https://masup.net/slide/keyboard-operation-on-react/" />
+<meta property="og:locale" content="ja_jp" />
+<meta property="fb:admins" content="100001237091421" />
+<meta property="fb:app_id" content="1556292864648648" />
+<meta property="og:description" content="2017年7月27日の「まかないてっく#１杯目　〜フロントエンドを語ろう〜」での発表資料です。キーボード操作の大事さとキーボード操作実装のTipsを少し紹介しました。" />
+
+<!-- Printing and PDF exports -->
+<script>
+	var link = document.createElement( 'link' );
+	link.rel = 'stylesheet';
+	link.type = 'text/css';
+	link.href = window.location.search.match( /print-pdf/gi ) ? '../reveal.js/css/print/pdf.css' : '../reveal.js/css/print/paper.css';
+	document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+<script src="../reveal.js/lib/js/head.min.js"></script>
+<script src="../reveal.js/js/reveal.js"></script>
+
+<meta name="author" content="Soichi Masuda">
+
+</head>
+<body>
+<script src="/js/gtm.js"></script>
+<div class="reveal">
+<div class="slides">
+
+<section>
+<h1><small>Reactで</small><span style="font-size: smaller">キーボード操作<br>(ｶﾁｬｶﾁｬｶﾁｬ…ｯﾀｰﾝ!)<br>するために</span></h1>
+<p>
+<small>
+<time datetime="2017-07-27">2017年7月27日</time>
+「まかないてっく#１杯目　〜フロントエンドを語ろう〜」
+<a href="https://masup.net" class="p-db">masuP9</a>
+</small>
+</p>
+</section>
+
+<section>
+<h2><a href="https://twitter.com/masuP9">@masuP9</a></h2>
+<p><img src="../assets/img/profile.jpg" alt="ますぴーとかかれたバッジの写真" style="border-radius: 51%;max-height: 15vmin" /></p>
+<ul style="font-size: smaller">
+<li>桝田 草一（ますぴー）</li>
+<li><a href="https://www.cyberagent.co.jp/">株式会社サイバーエージェント</a></li>
+<li>フロントエンドデベロッパー</li>
+<li>CAのアクセシビリティおじさん(自称)</li>
+</ul>
+</section>
+
+<section data-background-image="../assets/img/FRESH!_visual.png">
+<h3><a href="https://freshlive.tv/"><img src="../assets/img/FRESH_logo_white_clear_1000_416.png" alt="FRESH!"></a></h3>
+<p style="color: #fff;">生放送がログイン不要・高画質で<span class="p-dib">見放題のプラットフォーム</span></p>
+</section>
+<section data-background-iframe="https://freshlive.tv/embed/109133">
+<div class="fragment fade-in" style="background-color: #fff;padding: 1em;">
+<p>[PR]FRESH!では配信主を募集しています。</p>
+<p>勉強会の生配信とか！</p>
+<p><a href="https://freshlive.tv/lp/channelrequest">👉 チャンネル開設のご案内</a></p>
+</div>
+</section>
+
+<section>
+<p>本題</p>
+<p>キーボード操作対応してますか？</p>
+</section>
+
+<section>
+	<h2>目次</h2>
+	<ol style="font-size: smaller;margin-top: 1em">
+		<li><a href="#whats-keyboard-operation">キーボード操作に対応するとは</a></li>
+		<li><a href="#use-better-element">適切な要素を使おう</a></li>
+		<li><a href="#tips-for-coding">キーボードイベント実装のアレコレ</a><small class="p-db">Reactあんまり関係なくなった...</small></li>
+	</ol>
+</section>
+
+<section>
+<p><strong class="p-tt-u" style="font-size: 2em;color: #c00">Caution!!</strong></p>
+<p><abbr title="ライトニングトーク">LT</abbr>につき乱暴な要約や<br>意訳、私見が混ざっています</p>
+</section>
+
+<section id="whats-keyboard-operation">
+	<h3>キーボード操作に対応するとは</h3>
+	<p class="p-text-left-block">ここでは特別なショートカットキーを用意することではなく、通常のUIがキーボードから操作できることを指します</p>
+</section>
+
+<section>
+	<div class="p-Button" onclick="document.getElementById('fragment1').hidden = false">実行</div>
+	<p id="fragment1" hidden>実行したよ！</p>
+	<style>
+		.p-Button {
+			display: inline-block;
+			padding: 20px 100px !important;
+			border: 0;
+			font-size: 32px !important;
+			border-radius: 100em;
+			background-color: midnightblue;
+			color: #fff;
+		}
+		.p-Button:hover {
+			cursor: pointer;
+		}
+	</style>
+</section>
+
+<section>
+	<button class="p-Button" type="button" onclick="document.getElementById('fragment2').hidden = false">実行</button>
+	<p id="fragment2" hidden>キーボード操作できる！</p>
+</section>
+
+<section>
+	<h2>キーボード操作に対応するとは</h2>
+	<ul style="margin-top: 1em">
+		<li>要素がキーボードで操作可能であることをUAに伝える</li>
+		<li>標準的な操作（キーを押す）で実行を可能にする</li>
+	</ul>
+</section>
+
+
+<section>
+<h3>いいことあるの？</h3>
+<p class="fragment">（力強く）<strong style="font-size: larger">ある</strong></p>
+</section>
+
+<section>
+	<p>
+	<span class="p-db">(ｶﾁｬｶﾁｬｶﾁｬ…)</span>
+	<span class="fragment">(ｯﾀｰﾝ!)</span></p>
+	<p class="fragment">したかった俺たちは...</p>
+</section>
+
+<section>
+<h4>Vimmer こころの叫び</h4>
+<blockquote class="twitter-tweet" data-partner="tweetdeck"><p lang="ja" dir="ltr">昨日からgoogle検索の j, kショートカットが使えなくて辛い<br>キーボードだけでブラウジング出来ないじゃん！</p>&mdash; AAkira (@_a_akira) <a href="https://twitter.com/_a_akira/status/890436221029146625">July 27, 2017</a></blockquote>
+<p><small style="color: #555">正確に言うとこれはショートカットキーやけどな…</small></p>
+</section>
+
+<section>
+<h4>アクセシビリティ</h4>
+<figure>
+<blockquote style="font-size: smaller">すべての機能がキーボードを用いて利用可能であれば、キーボードの利用者、（キーボード入力を生成する）音声入力、（オンスクリーン・キーボードを使用する）マウス、及び出力として疑似的な打けんを生成する様々な支援技術により、その機能を実現することができる。</blockquote>
+<figcaption><cite><a href="http://waic.jp/docs/UNDERSTANDING-WCAG20/keyboard-operation.html">ガイドライン 2.1 を理解する | WCAG 2.0解説書</a></cite></figcaption>
+</figure>
+</section>
+
+<section>
+	<p>分かりやすく言うと</p>
+	<p class="p-text-left-block">キーボード操作に対応していると、キーボード以外の様々なデバイス（マウスも含む）や支援技術からの操作に対応しやすい。</p>
+</section>
+
+<section>
+	<p>さらに言うと</p>
+	<p class="p-text-left-block">キーボード操作はデバイスと<abbr title="User Interface">UI</abbr>との標準的なプロトコル</p>
+</section>
+
+<section>
+	<p>未知のデバイスでも<br>キーボード操作信号さえ生成すれば操作可能</p>
+</section>
+
+<section>
+	<p>例えばこのスライドも視線入力装置で操作できる（かもしれない）</p>
+</section>
+
+<section>
+	<p>UIが対応さえしていればの話</p>
+</section>
+
+<section>
+	<p><strong style="font-size: larger">やるしかないのでは？</strong></p>
+	<p><span role="img" aria-label="マッスル絵文字" style="font-size: 100px">💪</span></p>
+</section>
+
+<section>
+<p>キーボード操作対応しよう</p>
+<p class="fragment"><span class="p-decomoji" data-fragment-index="0"><img src="https://raw.githubusercontent.com/oti/slack-reaction-decomoji/master/decomoji/douyatteyatteruno.png" alt="どうやってやってるの"><span>1</span></span></p>
+</section>
+
+<section id="use-better-element">
+	<h2>適切な要素を使おう</h2>
+</section>
+
+<section>
+<p><a href="#fragment1">キーボード操作できない例</a>の実装</p>
+<pre><code class="html">&lt;div onclick="hoge();"&gt;hogehoge&lt;/div&gt;</code></pre>
+</section>
+
+<section>
+<ul style="margin-top: 1em;font-size: smaller">
+	<li>要素がキーボードで操作可能であることをUAに伝える <span class="fragment" role="img" aria-label="女の人が手でバツじるしを作っている絵文字">🙅</span></li>
+	<li class="fragment">標準的な操作（キーを押す）で実行を可能にする <span class="fragment" role="img" aria-label="女の人が手でバツじるしを作っている絵文字">🙅</span></li>
+</ul>
+</section>
+
+<section>
+	<p>Better</p>
+	<pre><code class="html">&lt;div tabindex="0" onclick="hoge();" onkeyup="fuga();"&gt;
+  実行
+&lt;/div&gt;</code></pre>
+</section>
+
+<section>
+	<p>Best</p>
+	<pre><code>&lt;button type="button" onclick="hoge();"&gt;実行&lt;/button&gt;</code></pre>
+</section>
+
+<section>
+	<p>基本的は適切な要素を使用するだけ</p>
+	<ul>
+		<li><code>button</code></li>
+		<li><code>input[type="text"]</code></li>
+		<li><code>input[type="checkbox"]</code></li>
+		<li><code>input[type="range"]</code></li>
+	</ul>
+</section>
+
+<section>
+	<p>とはいえまだそのまま使えなかったり...</p>
+	<ul>
+		<li><code>detail(summary)</code></li>
+		<li><code>dialog</code></li>
+		<li><code>input[type="date"]</code></li>
+	</ul>
+</section>
+
+<section>
+	<p>オリジナルデザインだったり...</p>
+	<p><img src="controlbar.png" alt="動画プレイヤーのコントロールバー部分のスクリーンキャプチャ。HTML標準の見た目ではないシークバーや、ボタンの類が見られる" />
+</section>
+
+<section id="tips-for-coding">
+	<h2>キーボードイベント実装の<span class="p-dib">アレコレ</span></h2>
+</section>
+
+<section>
+<h3>Reactのfocusイベント</h3>
+<div class="p-text-left-block">
+<p><code>onFocusIn</code>/<code>onFocusOut</code>イベントがない。</p>
+<p>そのかわり `onFocus` が伝搬する(blurも一緒)</p>
+</div>
+</section>
+
+<section>
+<p>本来は、<code>focusin</code>はバブリングし<br><code>focus</code>はバブリングしない</p>
+<p><small>実際使用する場合はCSSの<code>:focus</code>と<code>:focus-within</code>ぽい感じ</small></p>
+</section>
+
+<section>
+	<div class="p-text-left-block">
+	<p>例えば、動画プレイヤーのコントロールバー</p>
+	<p><img src="controlbar.png" alt="動画プレイヤーのコントロールバー部分のスクリーンキャプチャ" />
+	<p>中のUIにフォーカスが当たっている場合のみ表示したいというUI</p>
+	<p><a href="https://freshlive.tv/">例：FRESH!の動画プレイヤー</a></p>
+	</div>
+</section>
+
+<section>
+	<p>以下でおｋ</p>
+	<pre><code>&lt;div onFocus={} onBlur={}&gt;
+&lt;button type="button"&gt;Button&lt;/button&gt;
+&lt;button type="button"&gt;Button&lt;/button&gt;
+&lt;button type="button"&gt;Button&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+<p class="p-text-left-block"><code>onFocus</code>でも、ラッパーの要素でイベントが発火する</p>
+</section>
+
+<section>
+<p class="p-text-left-block">ただし中のButtonにはフォーカスが当たる必要があるので、フォーカスが当たる形で隠す必要がある。</p>
+</section>
+
+<section>
+	<h3>フォーカスがあたる非表示</h3>
+	<p class="p-text-left-block">レンダリングされてないのはもちろん、<code>display: none</code>や<code>visibility:hidden</code>でもフォーカスを受け取らなくなる</p>
+</section>
+
+<section>
+	<pre><code class="css">.Element:not(.is-focus) {
+  opacity: 0;
+  pointer-events: none;
+}</code></pre>
+<p>の組み合わせがオススメ。</p>
+</section>
+
+<section>
+	<h3>ネイティブ要素がない場合の<br>キーボード操作</h3>
+	<p>どのキーでどう動けばいいの？</p>
+</section>
+
+<section>
+	<p><a href="https://www.w3.org/TR/wai-aria-practices-1.1/">WAI-ARIA Authoring Practices 1.1</a> を参考に</p>
+</section>
+
+<section>
+	<h4>Slider Keyboard Interaction</h4>
+	<figure>
+	<blockquote>
+		<ul style="font-size: 0.625em">
+			<li>Right Arrow: Increase the value of the slider by one step.</li>
+			<li>Up Arrow: Increase the value of the slider by one step.</li>
+			<li>Left Arrow: Decrease the value of the slider by one step.</li>
+			<li>Down Arrow: Decrease the value of the slider by one step.</li>
+			<li>Home: Set the slider to the first allowed value in its range.</li>
+			<li>End: Set the slider to the last allowed value in its range.</li>
+			<li>Page Up (Optional): Increment the slider by an amount larger than the step change made by Up Arrow.</li>
+			<li>Page Down (Optional): Decrement the slider by an amount larger than the step change made by Down Arrow.</li>
+		</ul>
+	</blockquote>
+	<figcaption><cite><a href="https://www.w3.org/TR/wai-aria-practices-1.1/#slider">WAI-ARIA Authoring Practices 1.1 - 2.19 Slider</a></cite></figcaption>
+	</figure>
+</section>
+
+<section>
+	<p>最低限は<kbd>Tab</kbd>と<kbd>Enter</kbd>で動くようにするでOK</p>
+</section>
+
+<section>
+	<p>他にもいろいろあるけど…<br>
+	やっていきましょう 💪</p>
+</section>
+
+<section>
+<h2>参考文献</h2>
+<div style="font-size: 0.625em;text-align: left">
+<ul>
+<li><a href="http://waic.jp/docs/UNDERSTANDING-WCAG20/keyboard-operation.html">キーボード操作可能 ガイドライン 2.1 を理解する | WCAG 2.0解説書</a></li>
+<li><a href="https://www.w3.org/TR/wai-aria-practices-1.1/">WAI-ARIA Authoring Practices 1.1</a></li>
+<li><a href="https://facebook.github.io/react/docs/events.html#keyboard-events">SyntheticEvent - React</a></li>
+<li><a href="https://developer.mozilla.org/ja/docs/Web/API/KeyboardEvent">KeyboardEvent - Web API インターフェイス | MDN</a></li>
+</ul>
+</div>
+</section>
+
+<section>
+	<p>＼(^o^)／ｵﾜﾘ</p>
+</section>
+
+<section>
+	<p>[PR]WCAGもくもく会 #2</p>
+	<p>定員なので9月以降に乞うご期待！</p>
+</section>
+
+<!-- /.slides --></div>
+<!-- /.reveal --></div>
+
+<script defer>
+	// More info https://github.com/hakimel/reveal.js#configuration
+	Reveal.initialize({
+		history: true,
+
+		// More info https://github.com/hakimel/reveal.js#dependencies
+		dependencies: [
+			{ src: '../reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+		]
+	});
+	Reveal.configure({ slideNumber: 'c/t' });
+</script>
+</body>
+</html>
