@@ -1,0 +1,271 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width" />
+
+<title>WAI-ARIAを基本から見直す</title>
+
+<link rel="stylesheet" href="../reveal.js/css/reveal.css">
+<link rel="stylesheet" href="../reveal.js/css/theme/white.css">
+<link rel="stylesheet" href="../assets/css/additional.css">
+
+<!-- Theme used for syntax highlighting of code -->
+<link rel="stylesheet" href="../reveal.js/lib/css/zenburn.css">
+
+<!-- Printing and PDF exports -->
+<script>
+	var link = document.createElement( 'link' );
+	link.rel = 'stylesheet';
+	link.type = 'text/css';
+	link.href = window.location.search.match( /print-pdf/gi ) ? '../reveal.js/css/print/pdf.css' : '../reveal.js/css/print/paper.css';
+	document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+<script src="../reveal.js/lib/js/head.min.js"></script>
+<script src="../reveal.js/js/reveal.js"></script>
+
+<meta name="author" content="Soichi Masuda">
+
+</head>
+<body>
+<script src="/js/gtm.js"></script>
+<div class="reveal">
+<div class="slides">
+
+<section>
+<h1>WAI-ARIAの<br>キホンの考え方</h1>
+<p>
+<small>
+<time datetime="2017-06-29">2017年6月29日</time>
+<a href="http://masup.net">masuP9</a>
+</small>
+</p>
+</section>
+
+<section>
+<h2>今日の目標</h2>
+<p class="p-text-left-block">WAI-ARIA実装時の基本的な考え方や気をつけるポイント、参照するドキュメントを知る</p>
+</section>
+
+<section>
+<h2>WAI-ARIA とは</h2>
+<p class="p-text-left-block">
+<pre><mark>W</mark>eb
+<mark>A</mark>ccessibility
+<mark>I</mark>nitiative
+<mark>A</mark>ccessible
+<mark>R</mark>ich
+<mark>I</mark>nternet
+<mark>A</mark>pplication</p></pre>
+</section>
+
+<section>
+<p>ホストマークアップ言語にないセマンティクス（役割と属性）を追加するための仕様</p>
+<p><a href='https://www.w3.org/TR/wai-aria-1.1/'>Accessible Rich Internet Applications (WAI-ARIA) 1.1</a></p>
+<p><small>※ここでは基本的にホストマークアップ言語はHTMLとしてお話します。</small></p>
+</section>
+
+<section>
+<h3>なぜ追加のセマンティクスが必要か</h3>
+<p class="p-text-left-block">アクセシビリティAPIを通じて適切な<br>
+アクセシビリティオブジェクトを支援技術に伝えるため。<br> HTMLは語彙が貧弱<small>（要素追加するの大変やし）</small>
+</p>
+</section>
+
+<section>
+<h3>アクセシビリティAPI？<br>アクセシビリティオブジェクト？</h3>
+<p class="p-text-left-block">支援技術はブラウザだけが対象ではない。そのため情報をやりとりする汎用的なAPIが必要</p>
+<p>→ <a href='https://www.slideshare.net/takenspc/20140713-accessibility-object'>アクセシビリティオブジェクトについて</a></p></section>
+
+<section>
+<h2>WAI-ARIA が追加するもの</h2>
+<ul>
+<li>役割 : <code>role</code></li>
+<li>状態 : <code>aria-*</code></li>
+<li>プロパティ : <code>aria-*</code></li>
+</ul>
+</section>
+
+<section>
+<h3><code>role</code></h3>
+<p class="p-text-left-block">役割の追加・上書きをするための属性。次のように分類される。</p>
+<dl style="font-size: 0.7em">
+<dt>抽象ロール</dt>
+<dd><code>widget</code>, <code>structure</code>, <code>landmark</code>...</dd>
+<dt>ウィジェットロール</dt>
+<dd><code>button</code>, <code>slider</code>, <code>tooltip</code>...</dd>
+<dt>文書構造ロール</dt>
+<dd><code>article</code>, <code>heading</code>, <code>img</code>, <code>none</code>, <code>toolbar</code></dd>
+<dt>ランドマークロール</dt>
+<dd><code>banner</code>, <code>main</code>, <code>contentinfo</code></dd>
+<dt>ライブ領域ロール</dt>
+<dd><code>alert</code>, <code>log</code>, <code>marquee</code></dd>
+</dl>
+</section>
+
+<section>
+<p><strong class="p-tt-u" style="font-size: 2em">Caution!!!!!!</strong></p>
+<p><strong>抽象ロールは使用不可</strong></p>
+<p class="fragment">
+インスタンス化してはいけないやつ
+<small class="p-db">（よくわかってない、俺達は雰囲気で(ry)</small>
+</p>
+</section>
+
+<section>
+<h3><code>aria-*</code></h3>
+<p>状態、プロパティを追加する属性</p>
+<dl style="font-size: 0.7em">
+<dt><code>aria-label</code></dt>
+<dd>テキストプロパティを付与する</dd>
+<dt><code>aria-controls</code></dt>
+<dd>操作する要素を定義するプロパティ</dd>
+<dt><code>aria-expanded</code></dt>
+<dd>開いたり閉じたり（ステート）</dd>
+<dt><code>aria-hidden</code></dt>
+<dd>アクセシビリティーAPIに公開されているかどうか ≠ <code>hidden</code></dd>
+</dl>
+</section>
+
+<section>
+<p class="p-text-left-block">状態やプロパティはHTMLのネイティブセマンティクスにあまり無いため、利便性を高めるには重宝する。</p>
+<p><code>checked</code>, <code>disabled</code>, <code>hidden</code>, <code>open</code></p>
+</section>
+
+<section>
+<h2>WAI-ARIAを使う上で注意点</h2>
+<div class="p-text-left-block">
+<p>WAI-ARIAのベストプラクティス = WAI-ARIAをなるべく使わない</p>
+<p>= HTMLのネイティブセマンティクスを優先して使用する</p>
+</div>
+</section>
+
+<section>
+<figure>
+<blockquote class="p-quote">
+<p>ウェブ開発者は、表に定義される暗黙のARIAセマンティックスと一致する値にARIA roleおよびaria-</em>属性を設定すべきでない。</p>
+</blockquote>
+<figcaption class="p-text-left-block"><cite><a href='https://momdo.github.io/html-aria/#rules-wd'>ARIA in HTMLの使用に対するウェブ開発者の要件 - ARIA in HTML 日本語訳</a></cite></figcaption>
+</figure>
+</section>
+
+<section>
+<p>デフォルトの役割と重複させたアカンよ</p>
+</section>
+
+<section>
+<pre><code>&lt;button role=&quot;button&quot;&gt;button&lt;/button&gt;</code></pre>
+</section>
+
+<section>
+<p class="p-text-left-block">※ブラウザのサポート状態やバグ対応のためにあえて重複させるのは <span aria-label="OK">🙆</span>‍️</p>
+</section>
+
+<section>
+<pre><code>&lt;main role=&quot;main&quot;&gt;main&lt;/main&gt;</code></pre>
+<p><small>※IE11は<code>&lt;main&gt;</code>要素の暗黙のARIAセマンティクスを理解しない<br>（ <code>role=&quot;main&quot;</code> は解釈する）</small></p>
+</section>
+
+<section>
+<pre><code>&lt;img role=&quot;img&quot; src=&quot;hoge.svg&quot; alt=&quot;hoge&quot; /&gt;</code></pre>
+<p><small>※iOS VoiceOver は <code>.svg</code> で終わる <code>img</code> 要素の <code>alt</code> を読み上げない。<br>
+（ <code>role=&quot;img&quot;</code> があると読み上げる）</small></p>
+
+</section>
+
+<section>
+<figure>
+<blockquote class="p-quote">
+<p>ウェブ開発者は、HTMLにおけるARIA属性の使用に対する文書適合性の表に示されるセマンティックスと矛盾する方法でARIA <code>role</code>および<code>aria-*</code>属性を使用してはならない。</p>
+</blockquote>
+<figcaption class="p-text-left-block">
+<cite><a href='https://momdo.github.io/html-aria/#rules-wd'>ARIA in HTMLの使用に対するウェブ開発者の要件 - ARIA in HTML 日本語訳</a></cite></figcaption>
+</figure>
+</section>
+
+<section>
+<p>使っていい<code>role</code>は決められてるんよ</p>
+</section>
+
+<section>
+<blockquote class="p-quote">
+<p>次は、button要素でrole=headingを使用する。button要素はheadingロールと衝突するデフォルト特性を持つため、これは許可されない。</p>
+<pre><code>&lt;button role=&quot;heading&quot;&gt;search&lt;/button&gt;</code></pre>
+</blockquote>
+</section>
+
+<section>
+<p class="p-text-left-block">HTMLの各要素の暗黙のセマンティクスと使用しても良い <code>role</code> については、<a href="https://momdo.github.io/html-aria/#docconformance">ARIA in HTMLの使用に対する文書適合性要件</a>を参照のこと</p>
+<p class="p-text-left-block">覚えられないので <a href="https://github.com/evcohen/eslint-plugin-jsx-a11y">eslint-plugin-jsx-a11y</a> とか使うと良いかもね！</p>
+</section>
+
+<section>
+<h2>WAI-ARIAは補助輪？<br>未来予想図？</h2>
+</section>
+
+<section>
+<div class="p-text-left-block">
+<p>HTMLに足りない要素を補い、HTMLに新しいセマンティクスが追加されれば、それを補っていたWAI-ARIAを外す必要がある。<br>
+その意味では自転車の補助輪である。</p>
+<p>ただWAI-ARIAには、補うだけではなくHTMLの未来を示す役割もあります。</p>
+</div>
+</section>
+
+<section>
+<figure>
+<blockquote class="p-quote">
+<p>WAI-ARIAの1つの目標はよりセマンティックかつアクセシブルなマークアップの出現を刺激する手助けをすることである</p>
+</blockquote>
+<figcaption class="p-text-left-block"><cite><a href='https://momdo.github.io/wai-aria-1.1/#co-evolution'>1.4 WAI-ARIAとホスト言語の相互進化 - Accessible Rich Internet Applications (WAI-ARIA) 1.1 日本語訳</a></cite></figcaption>
+</figure>
+</section>
+
+<section>
+<p>個人的には未来のHTMLを先取りしている気分！</p>
+</section>
+
+<section>
+<h2>参考文献</h2>
+<div style="font-size: 0.5em;text-align: left">
+<h3>仕様</h3>
+<ul>
+<li><a href='https://www.w3.org/TR/wai-aria-1.1/'>Accessible Rich Internet Applications (WAI-ARIA) 1.1</a></li>
+<li><a href='https://momdo.github.io/wai-aria-1.1/'>Accessible Rich Internet Applications (WAI-ARIA) 1.1 日本語訳</a></li>
+<li><a href='https://www.w3.org/TR/2017/WD-html-aria-20170323/'>ARIA in HTML</a></li>
+<li><a href='https://momdo.github.io/html-aria/'>ARIA in HTML 日本語訳</a></li>
+</ul>
+<h3 style="margin-top: 1em">実装サンプルなど</h3>
+<ul>
+<li><a href='http://w3c.github.io/aria-practices/'>WAI-ARIA Authoring Practices 1.1</a></li>
+<li><a href='http://heydonworks.com/practical_aria_examples/'>Practical ARIA Examples</a></li>
+</ul>
+<h3 style="margin-top: 1em">WAI-ARIA関連のスライドとか</h3>
+<ul>
+<li><a href='https://www.slideshare.net/takenspc/20140713-accessibility-object'>アクセシビリティオブジェクトについて</a></li>
+<li><a href='https://www.slideshare.net/rikiha/wai-ariaweb-11?qid=aa256596-91ab-4138-9d3d-b6dc8f927399&v=&b=&from_search=3'>WAI-ARIAで実現するマルチデバイス環境のWebアプリケーション</a></li>
+<li><a href='https://www.slideshare.net/nozomisawada969/accfes2017-d2-d20170518?qid=aa256596-91ab-4138-9d3d-b6dc8f927399&v=&b=&from_search=5'>WAI-ARIAの正しい使い方 〜あるある？ケーススタディ〜</a></li>
+</ul>
+</div>
+</section>
+
+<section>
+	<p>＼(^o^)／ｵﾜﾘ</p>
+</section>
+
+<!-- /.slides --></div>
+<!-- /.reveal --></div>
+
+<script defer>
+	// More info https://github.com/hakimel/reveal.js#configuration
+	Reveal.initialize({
+		history: true,
+
+		// More info https://github.com/hakimel/reveal.js#dependencies
+		dependencies: [
+			{ src: '../reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+		]
+	});
+	Reveal.configure({ slideNumber: 'c/t' });
+</script>
+</body>
+</html>
