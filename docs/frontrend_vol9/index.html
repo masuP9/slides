@@ -18,7 +18,7 @@
 	var link = document.createElement( 'link' );
 	link.rel = 'stylesheet';
 	link.type = 'text/css';
-	link.href = window.location.search.match( /print-pdf/gi ) ? '/reveal.js/css/print/pdf.css' : '/reveal.js/css/print/paper.css';
+	link.href = window.location.search.match( /print-pdf/gi ) ? '../reveal.js/css/print/pdf.css' : '../reveal.js/css/print/paper.css';
 	document.getElementsByTagName( 'head' )[0].appendChild( link );
 </script>
 <script src="../reveal.js/lib/js/head.min.js"></script>
@@ -114,7 +114,7 @@ by <a href="http://masup.net">masuP9</a>
 </section>
 
 <section>
-	<h5>WCAG 2.0<br>（Web Contents Accessibility Guidelines）</h5>
+	<h5>WCAG<br>（Web Contents Accessibility Guidelines）</h5>
 	<ul>
 		<li class="fragment">4つの原則</li>
 		<li class="fragment">12の指針</li>
@@ -153,7 +153,8 @@ by <a href="http://masup.net">masuP9</a>
 
 <section>
 <p>基本かつ、抑えられるとかなり<br />底上げできる項目だが...</p>
-<p class="fragment">実はこれがすべてできている<br />ウェブサイトやサービスはかなり少ない。</p>
+<p class="fragment">実はこれがすべてできている<br />ウェブサイトやサービスはかなり少ない</p>
+<p class="fragment"><small>個人の感想です</small></p>
 </section>
 
 <section>
@@ -613,7 +614,7 @@ by <a href="http://masup.net">masuP9</a>
 		<li><a href="https://www.w3.org/TR/ATAG20/">ATAG 2.0</a></li>
 		<li><a href="https://speakerdeck.com/ahomu/pahuomansuhanazezhong-yao-nafalseka-mu-xian-false-ux-nitorawarenaikuraiantosaidokai-fa-falseben-zhi">パフォーマンスはなぜ重要なのか？ - 目先の UX(?) にとらわれないクライアントサイド開発の本質</a></li>
 	</ul>
-	<p style="font-size: smaller"><a href="./">最初に戻る🏠</a></p>
+	<p style="font-size: smaller"><a href="./index.html#/">最初に戻る🏠</a></p>
 </section>
 
 <!-- <section>
@@ -682,7 +683,7 @@ by <a href="http://masup.net">masuP9</a>
 
 		// More info https://github.com/hakimel/reveal.js#dependencies
 		dependencies: [
-			{ src: '/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+			{ src: '../reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
 		]
 	});
 	Reveal.configure({ slideNumber: 'c/t' });
