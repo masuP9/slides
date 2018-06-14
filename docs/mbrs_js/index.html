@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>属性</title>
+  <title>色んなバー（プログレスバー、スライダーバー、コントロールバー）UIの細かい所</title>
 
   <link rel="stylesheet" href="../reveal.js/css/reveal.css">
   <link rel="stylesheet" href="../reveal.js/css/theme/white.css">
@@ -682,18 +682,17 @@
 
   <!-- Theme used for syntax highlighting of code -->
   <link rel="stylesheet" href="../reveal.js/lib/css/zenburn.css">
-  <meta name="description" content="まぼろしのマークアップ勉強会 #1 での発表資料です。ol要素の属性や、hidden属性、inert属性について紹介しています。">
+  <meta name="description" content="まぼろしのJS勉強会#2での発表資料です。色んなバーUI（プログレスバー、スライダーバー、コントロールバー）UIの細かい所について、主にアクセシビリティ観点からお話しました。">
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="属性" />
-  <meta property="og:url" content="https://masup.net/slide/mbrs_markup/" />
+  <meta property="og:title" content="色んなバー（プログレスバー、スライダーバー、コントロールバー）UIの細かい所" />
+  <meta property="og:url" content="https://masup.net/slide/mbrs_js/" />
   <meta property="og:locale" content="ja_jp" />
-  <meta property="og:image" content="https://masup.net/slide/mbrs_markup/ogp.png" />
   <meta property="fb:admins" content="100001237091421" />
   <meta property="fb:app_id" content="1556292864648648" />
-  <meta property="og:description" content="まぼろしのマークアップ勉強会 #1 での発表資料です。ol要素の属性や、hidden属性、inert属性について紹介しています。" />
+  <meta property="og:description" content="まぼろしのJS勉強会#2での発表資料です。色んなバーUI（プログレスバー、スライダーバー、コントロールバー）UIの細かい所について、主にアクセシビリティ観点からお話しました。" />
   <meta name="author" content="Soichi Masuda">
 
-  <link rel="canonical" href="https://masup.net/slide/mbrs_markup/">
+  <link rel="canonical" href="https://masup.net/slide/mbrs_js/">
 
   <!-- Printing and PDF exports -->
   <script>
@@ -715,184 +714,197 @@
     <div class="slides">
 
       <section>
-        <h1 style="font-size:8em">属性</h1>
+        <h1>色んなバー（プログレスバー、スライダーバー、コントロールバー）UIの細かい所</h1>
         <p>
           <small>
-            <time datetime="2017-11-18">2017-11-18</time>
-            まぼろしのマークアップ勉強会 #1
+            <time datetime="2018-01-12">2018/01/12</time>
+            まぼろしのJS勉強会 #2 「細かすぎて伝わらないUI実装選手権」
             <a href="https://masup.net/about.shtml" class="p-db">@masuP9</a>
           </small>
         </p>
       </section>
 
       <section>
-        <h2>Attributes for ordered list</h2>
+        <h2>プログレスバー</h2>
       </section>
 
       <section>
-        <ol>
-          <li><span style="display:inline-block;width:5.5em">パパさん</span> <span>100pt</span></li>
-          <li><span style="display:inline-block;width:5.5em">ぴっぴさん</span> <span>80pt</span></li>
-          <li><span style="display:inline-block;width:5.5em">プーさん</span> <span>60pt</span></li>
-          <li><span style="display:inline-block;width:5.5em">ぺーさん</span> <span>40pt</span></li>
-          <li><span style="display:inline-block;width:5.5em">ぽっぽさん</span> <span>20pt</span></li>
-        </ol>
+        <p><code>&lt;progress&gt;</code>!! That&#39;s it!</p>
+        <p class="fragment">🤓 &lt; original design!</p>
+        <p class="fragment">🤓 &lt; animation!</p>
+        <p class="fragment">😇 </p>
       </section>
 
       <section>
-        <ol>
-          <li class="fragment"><span style="display:inline-block;width:5.5em">パパさん</span> <span>100pt</span></li>
-          <li class="fragment"><span style="display:inline-block;width:5.5em">ぴっぴさん</span> <span>80pt</span></li>
-          <li class="fragment"><span style="display:inline-block;width:5.5em">プーさん</span> <span>80pt</span></li>
-        </ol>
-        <p style="margin:0.5em 0 1em;" class="fragment">4位以下は...</p>
-        <ol start="4" class="fragment">
-          <li><span style="display:inline-block;width:5.5em">ぺーさん</span> <span>40pt</span></li>
-          <li><span style="display:inline-block;width:5.5em">ぽっぽさん</span> <span>20pt</span></li>
-        </ol>
+        <p><code>&lt;progress&gt;</code> を隠蔽しつつ、<br />表示を <code>&lt;div&gt;</code> で行い、値を共有する。</p>
       </section>
 
       <section>
-        <figure>
-        <figcaption><code>start</code> attribute</figcaption>
-        <pre><code class="html">&lt;ol&gt;
-  &lt;li&gt;パパさん100pt&lt;/li&gt;
-  &lt;li&gt;ぴっぴさん80pt&lt;/li&gt;
-  &lt;li&gt;プーさん80pt&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;4位以下は...&lt;/p&gt;
-&lt;ol start="4"&gt;
-  &lt;li&gt;ぺーさん40pt&lt;/li&gt;
-  &lt;li&gt;ぽっぽさん20pt&lt;/li&gt;
-&lt;/ol&gt;</code></pre>
-      </figure>
+        <h3>HTML</h3>
+        <pre><code>&lt;div class="Progressbar"&gt;
+  &lt;div class="Progressbar__value" style="width: 70%;"&gt;&lt;/div&gt;
+  &lt;progress value="70" max="100"&gt;100%&lt;/progress&gt;
+&lt;/div&gt;</code></pre>
+        <p>or</p>
+        <pre><code>&lt;div
+  role="progressbar"
+  aria-valuenow="70"
+  aria-valuemax="100"
+  class="Progressbar"
+&gt;
+  &lt;div class="Progressbar__value" style="width: 70%;"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
       </section>
 
       <section>
-        <ol reversed>
-          <li class="fragment"><span style="display:inline-block;width:5.5em">ぽっぽさん</span> <span>20pt</span></li>
-          <li class="fragment"><span style="display:inline-block;width:5.5em">ぺーさん</span> <span>40pt</span></li>
-          <li class="fragment"><span style="display:inline-block;width:5.5em">プーさん</span> <span>60pt</span></li>
-          <li class="fragment"><span style="display:inline-block;width:5.5em">ぴっぴさん</span> <span>80pt</span></li>
-          <li class="fragment"><span style="display:inline-block;width:5.5em">パパさん</span> <span>100pt</span></li>
-        </ol>
-        <p class="fragment">🎉</p>
-      </section>
+        <h3>CSS</h3>
+        <pre><code>.Progressbar {
+  position: relative;
+  height: 32px;
+  border-radius: 1000px;
+  background-color: #484848;
+  clip-path: inset(0 0 0 0 round 1000px); // 終端の切り抜き
+}
 
-      <section>
-        <figure>
-        <figcaption><code>reversed</code> attribute</figcaption>
-        <pre><code class="html">&lt;ol reversed&gt;
-  &lt;li&gt;ぽっぽさん20pt&lt;/li&gt;
-  &lt;li&gt;ぺーさん40pt&lt;/li&gt;
-  &lt;li&gt;プーさん60pt&lt;/li&gt;
-  &lt;li&gt;ぴっぴさん80pt&lt;/li&gt;
-  &lt;li&gt;パパさん100pt&lt;/li&gt;
-&lt;/ol&gt;</code></pre>
-      </figure>
-      </section>
+.Progressbar__value {
+  height: 32px;
+  transition: width 0.4s ease-in-out;
+  border-radius: 1000px 0 0 1000px;
+  background-color: #ff4c65;
+}
 
-      <section>
-        <ol>
-          <li><span style="display:inline-block;width:5.5em">パパさん</span> <span>100pt</span></li>
-          <li><span style="display:inline-block;width:5.5em">ぴっぴさん</span> <span>80pt</span></li>
-          <li value="2" style="list-style:none"><span style="display:inline-block;width:5.5em">プーさん</span> <span>80pt</span></li>
-          <li value="4"><span style="display:inline-block;width:5.5em">ぺーさん</span> <span>40pt</span></li>
-          <li><span style="display:inline-block;width:5.5em">ぽっぽさん</span> <span>20pt</span></li>
-        </ol>
-      </section>
-
-      <section>
-        <figure>
-          <figcaption><code>value</code> attribute</figcaption>
-          <pre><code class="html">&lt;ol&gt;
-  &lt;li&gt;パパさん100pt&lt;/li&gt;&lt;!-- 1 --&gt;
-  &lt;li&gt;ぴっぴさん80pt&lt;/li&gt;&lt;!-- 2 --&gt;
-  &lt;li value="2"&gt;プーさん80pt&lt;/li&gt;
-  &lt;li value="4"&gt;ぺーさん40pt&lt;/li&gt;
-  &lt;li&gt;ぽっぽさん20pt&lt;/li&gt;&lt;!-- 5 --&gt;
-&lt;/ol&gt;</code></pre>
-        </figure>
-      </section>
-
-      <section>
-        <pre><code class="css">ol > li:not([value]) + li[value] {
-  list-style: none;
+.Progressbar > progress {
+  opacity: 0;
+  width: 1;
+  height: 1;
+  position: absolute;
+  pointer-events: none;
 }</code></pre>
       </section>
 
       <section>
-        <h2><code>hidden</code> attribute</h2>
+        <h3>JavaScript(React)</h3>
+        <pre><code class="jsx">const { value } = this.props;
+
+render(
+  &lt;div class="Progressbar"&gt;
+    &lt;div
+      class="Progressbar__value"
+      style={ width: `${value}`px }
+    /&gt;
+    &lt;progress value={value} max="100"&gt;${value}%&lt;/progress&gt;
+  &lt;/div&gt;
+);</code></pre>
+        <p><a href="https://jsfiddle.net/y9n82e04/2/">Progress bar - JSFiddle</a></p>
       </section>
 
       <section>
-        <p hidden>なにもないな、誰もいないな</p>
+        <p>さらに fallback</p>
+        <pre><code>/**
+  * HACK clip-path に対応していない IE/Edge でも value の端点を平らにしかつ
+  * プログレスバー終点を round にするために背景色と同じ塗のSVGをかぶせる
+  */
+.Progressbar__endPointOuter {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 16px;
+  height: 32px;
+}
+
+/* clip-path に対応してるブラウザーでは表示しない */
+@supports (clip-path: inset(0% 0% 0% 0% round 1000px)) {
+  .Progressbar__endPointOuter {
+    display: none;
+  }
+}</code></pre>
       </section>
 
       <section>
-        <pre><code class="html">&lt;p hidden&gt;なにもないな、誰もいないな&lt;/p&gt;</code></pre>
+        <h2>スライダーバー</h2>
+      </section>
+
+      <section>
+        <p><code>&lt;input type=&quot;range&quot;&gt;</code>!! That&#39;s it!</p>
+        <p class="fragment">🤓 &lt; original design!</p>
+        <p class="fragment">🤓 &lt; animation!</p>
+        <p class="fragment">😇 &lt; せやな</p>
+      </section>
+
+      <section>
+        <p>基本は、プログレスバー + スライド。スライドのマウス操作は置いておいて（自分がやってないので）キーボード操作について</p>
+      </section>
+
+      <section>
+        <pre><code>onKeyDownSeekBar(e) {
+  switch (e.key) {
+    case &#39;ArrowLeft&#39;:
+    case &#39;ArrowDown&#39;:
+      e.preventDefault(); // event キャンセルしないと、横スクロールがあったらスクロールしちゃう
+      this.setSeek(10);
+      break;
+    case &#39;ArrowRight&#39;:
+    case &#39;ArrowUp&#39;:
+      e.preventDefault();
+      this.setSeek(30);
+      break;
+    case &#39;Home&#39;:
+      e.preventDefault();
+      setSeek(0);
+      break;
+    default:
+  }
+}
+
+render(
+  &lt;div
+    role=&quot;slider&quot;
+    tabIndex=&quot;0&quot;
+    aria-valuenow={valuePercent}
+    aria-valuemin=&quot;0&quot;
+    aria-valuemax=&quot;100&quot;
+    aria-label={label}
+    aria-valuetext={valueText}
+    onKeyDown={this.onKeyDown}
+  &gt;
+    &lt;div style={{ width : `${valuePercent}%` }} /&gt;
+  &lt;/div&gt;
+);</code></pre>
+      </section>
+
+      <section>
+        <p>キーボード操作のキーと該当する操作のマッピングは <a href='https://www.w3.org/TR/wai-aria-practices-1.1/#slider_kbd_interaction'>WAI-ARIA Authoring Practices 1.1</a> を参考に。</p>
+        <blockquote style="font-size:smaller">
+          <ul style="font-size:smaller">
+            <li>Right Arrow: Increase the value of the slider by one step.</li>
+            <li>Up Arrow: Increase the value of the slider by one step.</li>
+            <li>Left Arrow: Decrease the value of the slider by one step.</li>
+            <li>Down Arrow: Decrease the value of the slider by one step.</li>
+            <li>Home: Set the slider to the first allowed value in its range.</li>
+            <li>End: Set the slider to the last allowed value in its range.</li>
+            <li>Page Up (Optional): Increment the slider by an amount larger than the step change made by Up Arrow.</li>
+            <li>Page Down (Optional): Decrement the slider by an amount larger than the step change made by Down Arrow.</li>
+        </ul>
+        </blockquote>
+      </section>
+
+      <section>
+        <h2>コントロールバー</h2>
       </section>  
 
       <section>
-        <figure>
-          <figcaption>
-            <cite><a href="https://html.spec.whatwg.org/multipage/dom.html#the-style-attribute">3.2.6.5 The style attribute - HTML Standard</a></cite>
-          </figcaption>
-          <blockquote>
-          <p>Documents that use style attributes on any of their elements must still be comprehensible and usable if those attributes were removed.</p>
-          <p>(NOTE)In particular, using the style attribute to hide and show content, or to convey meaning that is otherwise not included in the document, is non-conforming. (To hide and show content, use the hidden attribute.)</p>
-        </blockquote>
-        </figure>
+        <p><code>&lt;video controls&gt;</code>!! That&#39;s it!</p>
+        <p class="fragment">🤓 &lt; original design!</p>
+        <p class="fragment">🤓 &lt; original feature!</p>
+        <p class="fragment">😇 &lt; これはしゃあない</p>
       </section>
 
       <section>
-        <p><q>To hide and show content,<br />use the hidden attribute.</q></p>
+        <p><a href="https://masup.net/slide/keyboard-operation-on-react/#/31">Reactのfocusイベント</a></p>
       </section>
 
       <section>
-        <p>OKay</p>
-      </section>
-
-      <section>
-        <figure>
-          <blockquote>
-            <p>The hidden attribute must not be used to hide content that could legitimately be shown in another presentation.</p>
-          </blockquote>
-          <figcaption>
-            <a href="https://html.spec.whatwg.org/multipage/interaction.html#the-hidden-attribute">6.1 The hidden attribute - HTML Standard</a>
-          </figcaption>
-        </figure>
-      </section>
-
-      <section>
-        <p><q style="font-size:2em;">The hidden attribute must not be used to hide content</q></p>
-      </section>
-
-      <section>
-        <p style="font-size:4em">!?!?!?!?!?</p>
-      </section>
-
-      <section>
-        <blockquote>
-          <p>it indicates that</p>
-          <ul>
-            <li>the element is not yet, or is no longer, directly relevant to the page's current state, or </li>
-            <li>that it is being used to declare content to be reused by other parts of the page as opposed to being directly accessed by the user.</li>
-          </ul>
-        </blockquote>
-      </section>
-
-      <section>
-        <h2><code>inert</code> attribute</h2>
-        <p><a href="https://github.com/WICG/inert">https://github.com/WICG/inert</a></p>
-      </section>
-
-      <section>
-        <p><a href="https://developer.mozilla.org/ja/docs/Web/HTML/Element/fieldset">fieldset 要素 - HTML | MDN</a></p>
-      </section>
-
-      <section>
-        <p>はよ</p>
+        <p>＼(^o^)／ｵﾜﾘ</p>
       </section>
 
     </div>
